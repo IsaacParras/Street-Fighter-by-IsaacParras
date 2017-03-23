@@ -1,17 +1,6 @@
-//PROVA WEB
-  .....       .....
-  .   .       .   .
-  .....       .....
-         ...
-         ...
-                  
-     .............
-
-
-
 PImage fons1;
-PImage homer_idle , homer_puny , homer_patada, homer_defensa, homer;
-PImage bart, bart_idle, bart_defensa,bart_patada,bart_puny;
+PImage homer_idle, homer_puny, homer_patada, homer_defensa, homer;
+PImage bart, bart_idle, bart_defensa, bart_patada, bart_puny;
 int bartx, barty;
 int homerx;
 int homery;
@@ -52,29 +41,29 @@ void setup() {
 void draw() {
   image (fons1, 0, 0, width, height);
   image (homer, homerx, homery, 200, 300);
-  image (bart, bartx,barty , 200 , 300);
+  image (bart, bartx, barty, 200, 300);
   dibuixaBarres();
   comptaHomer++;
   //comptadorhomer
-  if(comptaHomer>=15){
+  if (comptaHomer>=15) {
     homer=homer_idle;
   }
-   
-  if(bartx<=0){
+
+  if (bartx<=0) {
     bartx=width-width-10;
   }
-  if(bartx>=width-150){
+  if (bartx>=width-150) {
     bartx=width-150;
   }
   //comptabart
-  if(comptaHomer>=15){
+  if (comptaHomer>=15) {
     bart=bart_idle;
   }
-   
-  if(bartx<=0){
+
+  if (bartx<=0) {
     bartx=width-width-10;
   }
-  if(bartx>=width-150){
+  if (bartx>=width-150) {
     bartx=width-150;
   }
 }
@@ -102,7 +91,7 @@ void keyPressed() {
     comptaHomer=0;
   }
   //BART
-    if (keyCode==RIGHT) {
+  if (keyCode==RIGHT) {
     bartx=bartx+10;
   }
   if (keyCode==LEFT) {
@@ -120,45 +109,57 @@ void keyPressed() {
     bart=bart_defensa;
     comptaHomer=0;
   }
-  if(homervidarest==0){
+  if (homervidarest==0) {
     noLoop();
-  
   }
-  
+
   //VIDA
-  if(bartx<=homerx+200 && bartx>homerx && bart==bart_patada){
+  if (bartx<=homerx+200 && bartx>homerx && bart==bart_patada) {
     homervidarest=homervidarest-10;
   }
 }
 
 void dibuixaBarres() {
+
+  /***
+   *
+   *Homer
+   *
+   */
   stroke(255, 255, 255);
   noFill();
   strokeWeight(4);
- 
-  rect (20, 10, width/2-10, 25);
-  fill(0, 255, 0);
+  rect (20, 10, width/2-50, 25);
+
 
   noStroke();
-  fill(255,0,0);
-  rect (22, 13, width/2-12, 20);
-   float b=(width/2-12)*(homervidarest/homervidatot);
-  rect (22, 13, b, 20);
-  fill(0,255,0);
-  rect (22, 13, b, 20);
-  //barrabart
+  fill(255, 0, 0);
+  rect (22, 13, width/2-53, 20);
+
+
+  float h=(width/2-53)*(homervidarest/homervidatot);
+  fill(0, 255, 0);
+  rect (22, 13, h, 20);
+
+
+  /***
+   *
+   *Bart
+   *
+   */
+
   stroke(255, 255, 255);
   noFill();
   strokeWeight(4);
- 
-  rect (20, 10, width-10, 25);
-  fill(0, 255, 0);
+  rect (width/2+30, 10, width/2-50, 25);
+/*
 
   noStroke();
-  fill(255,0,0);
-  rect (width/2+15, 13, width-12, 20);
-   float a=(width-12)*(bartvidarest/bartvidatot);
-  rect (width/2+15, 13, a, 20);
-  fill(0,255,0);
-  rect (width/2+15, 13, b, 20);
+  fill(255, 0, 0);
+  rect (22, 13, width/2-33, 20);
+
+
+  float b=(width/2-33)*(bartvidarest/bartvidatot);
+  fill(0, 255, 0);
+  rect (22, 13, b, 20);*/
 }

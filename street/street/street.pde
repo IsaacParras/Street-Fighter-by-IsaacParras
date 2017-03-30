@@ -4,7 +4,8 @@ PImage bart, bart_idle, bart_defensa, bart_patada, bart_puny;
 int bartx, barty;
 int homerx;
 int homery;
-int comptaHomer;
+int comptaHomerIdle, comptaHomerPatada, comptaHomerDefensa, comptaHomerPuny;
+int comptaBartIdle, comptaBartPatada, comptaBartDefensa, comptaBartPuny;
 float homervidatot;
 float homervidarest;
 float bartvidatot ;
@@ -34,7 +35,18 @@ void setup() {
   homery=300;
   bartx=550;
   barty=300;
-  comptaHomer=0;
+  comptaHomerIdle=0;
+  comptaHomerPatada=0;
+  comptaHomerPuny=0;
+  comptaHomerDefensa=0;
+
+
+  comptaBartIdle=0;
+  comptaBartPuny=0;
+  comptaHomerDefensa=0;
+  comptaHomerPatada=0;
+
+
   bart=bart_idle;
 }
 
@@ -43,11 +55,20 @@ void draw() {
   image (homer, homerx, homery, 200, 300);
   image (bart, bartx, barty, 200, 300);
   dibuixaBarres();
-  comptaHomer++;
+  augmentaComptadors();
   //comptadorhomer
-  if (comptaHomer>=15) {
+  if (comptaHomerIdle>=15) {
     homer=homer_idle;
   }
+ /* if (comptaHomerPuny>=15) {
+    homer=homer_idle;
+  }
+  if (comptaHomerPatada>=15) {
+    homer=homer_idle;
+  }
+  if (comptaHomerDefensa>=15) {
+    homer=homer_idle;
+  }*/
 
   if (bartx<=0) {
     bartx=width-width-10;
@@ -56,7 +77,17 @@ void draw() {
     bartx=width-150;
   }
   //comptabart
-  if (comptaHomer>=15) {
+  if (comptaBartIdle>=15) {
+    bart=bart_idle;
+/* 
+}
+  if (comptaBartPatada>=15) {
+    bart=bart_idle;
+  }
+  if (comptaBartPuny>=15) {
+    bart=bart_idle;
+  }
+  if (comptaBartDefensa>=15) {
     bart=bart_idle;
   }
 
@@ -65,11 +96,24 @@ void draw() {
   }
   if (bartx>=width-150) {
     bartx=width-150;
+    */
   }
+  
 }
 
 
+void augmentaComptadors() {
+  comptaHomerIdle++;
+  comptaHomerPatada++;
+  comptaHomerDefensa++;
+  comptaHomerPuny++;
 
+
+  comptaBartIdle++;
+  comptaBartPatada++;
+  comptaBartDefensa++;
+  comptaBartPuny++;
+}
 void keyPressed() {
   //HOMER
   if (key=='d') {
@@ -80,15 +124,16 @@ void keyPressed() {
   }
   if (key=='q') {
     homer=homer_puny;
-    comptaHomer=0;
+    comptaHomerIdle=0;
+    //comptaHomerPuny=0;
   }
   if (key=='e') {
     homer=homer_patada;
-    comptaHomer=0;
+    comptaHomerIdle=0;
   }
   if (key=='w') {
     homer=homer_defensa;
-    comptaHomer=0;
+    comptaHomerIdle=0;
   }
   //BART
   if (keyCode==RIGHT) {
@@ -99,22 +144,24 @@ void keyPressed() {
   }
   if (keyCode==SHIFT) {
     bart=bart_puny;
-    comptaHomer=0;
+    comptaBartIdle=0;
   }
   if (keyCode==DOWN) {
     bart=bart_patada;
-    comptaHomer=0;
+    if (comptaBartPatada>20) {
+      comptaBartIdle=0;
+    }
   }
   if (keyCode==UP) {
     bart=bart_defensa;
-    comptaHomer=0;
+    comptaBartIdle=0;
   }
   if (homervidarest==0) {
     noLoop();
   }
 
   //VIDA
-  if (bartx<=homerx+200 && bartx>homerx && bart==bart_patada) {
+  if (comptaBartPatada>10 && bartx<=homerx+200 && bartx>homerx && bart==bart_patada) {
     homervidarest=homervidarest-10;
   }
 }
@@ -126,10 +173,6 @@ void dibuixaBarres() {
    *Homer
    *
    */
-  stroke(255, 255, 255);
-  noFill();
-  strokeWeight(4);
-  rect (20, 10, width/2-50, 25);
 
 
   noStroke();
@@ -141,6 +184,11 @@ void dibuixaBarres() {
   fill(0, 255, 0);
   rect (22, 13, h, 20);
 
+  stroke(255, 255, 255);
+  noFill();
+  strokeWeight(4);
+  rect (20, 10, width/2-50, 25);
+
 
   /***
    *
@@ -148,18 +196,21 @@ void dibuixaBarres() {
    *
    */
 
+  noStroke();
+  fill(255, 0, 0);
+  rect (width/2+30, 10, width/2-50, 25);
+
+  float b=(width/2-50)*(bartvidarest/bartvidatot);
+  fill(0, 255, 0);
+  rect (width/2+30, 12, b, 22);
+
   stroke(255, 255, 255);
   noFill();
   strokeWeight(4);
   rect (width/2+30, 10, width/2-50, 25);
-/*
+  /*
 
-  noStroke();
-  fill(255, 0, 0);
-  rect (22, 13, width/2-33, 20);
-
-
-  float b=(width/2-33)*(bartvidarest/bartvidatot);
-  fill(0, 255, 0);
-  rect (22, 13, b, 20);*/
+   float b=(width/2-33)*(bartvidarest/bartvidatot);
+   fill(0, 255, 0);
+   rect (22, 13, b, 20);*/
 }
